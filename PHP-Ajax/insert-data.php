@@ -37,7 +37,24 @@
                     <div id="success-message" class="alert alert-success"></div>
             </div>
             <div class="container mt-2 rounded" id="table-data"></div>
+            <!-- Button trigger modal -->
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" >
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Student Data</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                    <div class="modal-body" id="modal-form">
+                        
+                    </div>
+               </div>
+            </div>
+            </div>
         </main>
+        
         <footer>
             <!-- place footer here -->
         </footer>
@@ -83,7 +100,37 @@
                         })
                     }
                 })
+                $(document).on("click",".delete-btn",function(){
+                    var studentId = $(this).data("id");
+                    var element = this;
+                    $.ajax({
+                        url : "ajax-delete.php",
+                        type : "POST",
+                        data : {id:studentId},
+                        success:function(data){
+                            if(data == 1){
+                                $(element).closest("tr").fadeOut();
+                            }else{
+                                $("#error-message").html("Can't Deleted Record.").slideDown();
+                                $("#success-message").slideUp();
+                            }
+                        }
+                    })
+                })
+                $(document).on("click",".edit-btn",function(){
+                    $("#exampleModal").modal("show");
+                    var studentId = $(this).data("eid");
 
+                    $.ajax({
+                        url : "load-update-form.php",
+                        type : "POST",
+                        data : {id:studentId},
+                        success:function(data){
+                            $('#modal-form').html(data);
+                        }
+                    })
+                    
+                })
             })
         </script>
         <!-- Bootstrap JavaScript Libraries -->
