@@ -35,6 +35,10 @@
                     </form>
                     <div id="error-message" class="alert alert-danger" style="display: none;"></div>
                     <div id="success-message" class="alert alert-success" style="display: none;"></div>
+            </div> 
+            <div class="container p-3 mt-2 d-flex bg-warning text-white rounded">
+                <h2>Searching... </h2>
+              <input type="text" id="search" class="form-control mx-2">
             </div>
             <div class="container mt-2 rounded" id="table-data"></div>
             <!-- Button trigger modal -->
@@ -150,6 +154,18 @@
                                   $("#exampleModal").modal("hide");  
                                    loadTable();
                             }
+                        }
+                    })
+                })
+                $("#search").on("keyup",function(){
+                    var search_term = $(this).val();
+
+                    $.ajax({
+                        url : "ajax-live-search.php",
+                        type : "POST",
+                        data : {search:search_term},
+                        success:function(data){
+                            $("#table-data").html(data);
                         }
                     })
                 })
