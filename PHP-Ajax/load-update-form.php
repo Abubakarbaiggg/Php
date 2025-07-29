@@ -10,15 +10,16 @@ $output = "";
 
 if(mysqli_num_rows($result) > 0){
                         while($row = mysqli_fetch_assoc($result)){
-                            $output .= " <form id='addForm' class='mb-3'>
-                                            <label for='' class='form-label'>Student Name</label>
-                                            <input type='text' class='form-control' name='student_name' value'{$row['student_name']}' id='student_name' />
-                                            <label for='' class='form-label'>Age</label>
-                                            <input type='text' class='form-control' name='age' value'{$row['age']}' id='age' />
-                                            <label for='' class='form-label'>City</label>
-                                            <input type='text' class='form-control' name='city' value'{$row['city']}' id='city' />
-                                            <input type='submit' class='btn btn-primary mt-2' id='save-button' value='Save'>
-                                        </form>";
+                                $output .= "<form id='edit-form' class='mb-3'>
+                                    <input type='hidden' class='form-control' name='id' value='{$row['id']}' id='edit-id' />
+                                    <label class='form-label'>Student Name</label>
+                                    <input type='text' class='form-control' name='student_name' value='{$row['student_name']}' id='edit-student-name' />
+                                    <label class='form-label'>Age</label>
+                                    <input type='text' class='form-control' name='age' value='{$row['age']}' id='edit-age' />
+                                    <label class='form-label'>City</label>
+                                    <input type='text' class='form-control' name='city' value='{$row['city']}' id='edit-city' />
+                                    <button type='submit' class='btn btn-primary mt-2' id='edit-submit'>Save</button>
+                                </form>";
                         }
                         mysqli_close($conn);
                         echo $output;

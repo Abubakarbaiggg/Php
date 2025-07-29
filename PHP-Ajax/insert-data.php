@@ -33,8 +33,8 @@
                         <input type="text" class="form-control" name="city" id="city" />
                         <input type="submit" class="btn btn-primary mt-2" id="save-button" value="Save">
                     </form>
-                    <div id="error-message" class="alert alert-danger"></div>
-                    <div id="success-message" class="alert alert-success"></div>
+                    <div id="error-message" class="alert alert-danger" style="display: none;"></div>
+                    <div id="success-message" class="alert alert-success" style="display: none;"></div>
             </div>
             <div class="container mt-2 rounded" id="table-data"></div>
             <!-- Button trigger modal -->
@@ -48,7 +48,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                     <div class="modal-body" id="modal-form">
-                        
                     </div>
                </div>
             </div>
@@ -130,6 +129,29 @@
                         }
                     })
                     
+                })
+                $(document).on("click","#edit-submit",function(e){
+                    e.preventDefault();
+                    var student_id = $("#edit-id").val();
+                    var student_name = $("#edit-student-name").val();
+                    var student_age = $("#edit-age").val();
+                    var student_city = $("#edit-city").val();
+
+                    $.ajax({
+                        url : "ajax-update-form.php",    
+                        type:"POST",
+                        data: { student_id: student_id,
+                                student_name: student_name,
+                                student_age: student_age,
+                                student_city: student_city
+                                },
+                        success:function(data){
+                            if(data == 1){
+                                  $("#exampleModal").modal("hide");  
+                                   loadTable();
+                            }
+                        }
+                    })
                 })
             })
         </script>
